@@ -407,12 +407,4 @@ Inspirado nas telas do protótipo mobile com:
 
 ---
 
-## 📦 Tecnologias
 
-- **HTML5** — estrutura semântica
-- **CSS3** — variáveis, grid, flexbox, animações
-- **JavaScript ES6+** — módulos por arquivo, sem framework
-- **Canvas API** — gráfico de barras customizado
-- **Google Fonts** — Syne + DM Sans
-
-> Nenhuma dependência externa ou build tool necessário!
