@@ -353,5 +353,66 @@ Aplicativo mobile-first de finanças pessoais que permite ao usuário registrar 
 |  **Sprint 3 — Visibilidade** | 5–6 | EP03 | US01 a US05 | Dashboard, saldo em tempo real, resumo mensal, ações rápidas, seleção de período |
 |  **Sprint 4 — Inteligência** | 7–8 | EP04, EP05, EP06 | US01 a US06 + US01 a US03 + US01 a US02 | Gráficos, relatórios, exportação, metas financeiras, alertas e lembretes |
 
+
+## Como rodar no VS Code
+
+### Opção 1 — Live Server (recomendado)
+1. Instale a extensão **Live Server** no VS Code
+2. Clique com botão direito em `index.html`
+3. Selecione **"Open with Live Server"**
+
+### Opção 2 — Abrir direto no navegador
+1. Navegue até a pasta `financeiro-app`
+2. Dê duplo clique em `index.html`
+
 ---
 
+##  Funcionalidades
+
+### 1. 📊 Dashboard com saldo em tempo real
+- Saldo = Receitas − Despesas, calculado dinamicamente
+- Cards de receita e despesa do mês
+- 5 últimas transações na tela inicial
+- Ações rápidas de navegação
+
+### 2. 💳 Registro e histórico de transações
+- **Criar** receitas e despesas pelo modal
+- **Editar** qualquer transação (toque para abrir)
+- **Filtrar** por tipo: Todas / Receitas / Despesas
+- **Buscar** por descrição em tempo real
+- **Navegar** por meses com setas ‹ ›
+
+### 3. 📈 Análise mensal com gráficos
+- 4 cards de métricas (receita, gasto, economizado, taxa de poupança)
+- Gráfico de barras: Receitas vs Despesas dos últimos 8 meses
+- Lista de categorias com barra de progresso proporcional
+
+### 4. 🎯 Metas financeiras
+- **Criar** metas com nome, valor-alvo, valor atual e prazo
+- **Acompanhar** progresso com barra colorida
+- **Badges** de status: Em andamento / Metade lá / Quase lá! / Concluída
+- **Remover** metas com confirmação
+- Limite de 5 metas simultâneas
+
+---
+
+## 🎨 Design
+
+Inspirado nas telas do protótipo mobile com:
+- Gradiente roxo no hero e cabeçalhos
+- Tipografia Syne (display) + DM Sans (corpo)
+- Cores semânticas: 🟢 verde = receita, 🔴 vermelho = despesa
+- Cards com sombra suave e bordas arredondadas
+- Animação slide-up nos modais
+
+---
+
+## 📦 Tecnologias
+
+- **HTML5** — estrutura semântica
+- **CSS3** — variáveis, grid, flexbox, animações
+- **JavaScript ES6+** — módulos por arquivo, sem framework
+- **Canvas API** — gráfico de barras customizado
+- **Google Fonts** — Syne + DM Sans
+
+> Nenhuma dependência externa ou build tool necessário!

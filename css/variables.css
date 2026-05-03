@@ -1,0 +1,26 @@
+
+
+:root {
+  /* Cores principais */
+  --v:       #6C5CE7;   /* roxo primário */
+  --v2:      #a29bfe;   /* roxo claro */
+  --v3:      #e8e5ff;   /* roxo muito claro */
+  --g:       #00b894;   /* verde (receita) */
+  --r:       #d63031;   /* vermelho (despesa) */
+  --o:       #fdcb6e;   /* laranja (alerta) */
+
+  /* Neutros */
+  --bg:      #f8f7ff;
+  --card:    #ffffff;
+  --txt:     #2d3436;
+  --txt2:    #636e72;
+  --txt3:    #b2bec3;
+
+  /* Layout */
+  --rad:     16px;
+  --sh:      0 4px 20px rgba(108, 92, 231, 0.10);
+
+  /* Fontes */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+}

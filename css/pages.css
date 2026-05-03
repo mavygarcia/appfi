@@ -1,0 +1,137 @@
+
+
+/* ---- PAGE: GRÁFICOS ---- */
+.chart-hero {
+  background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+  padding: 24px 20px 28px;
+}
+
+.chart-hero h1 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.chart-hero p {
+  font-size: 12px;
+  color: rgba(255,255,255,.8);
+  margin-top: 4px;
+}
+
+/* ---- PAGE: METAS ---- */
+.goals-hero {
+  background: linear-gradient(135deg, #00b894, #55efc4);
+  padding: 28px 20px 32px;
+  border-radius: 0 0 28px 28px;
+}
+
+.goals-hero h1 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.goals-hero p {
+  font-size: 12px;
+  color: rgba(255,255,255,.8);
+  margin-top: 4px;
+}
+
+.goal-card {
+  background: var(--card);
+  border-radius: 16px;
+  margin: 12px 20px 0;
+  padding: 16px;
+  box-shadow: var(--sh);
+}
+
+.goal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.goal-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.goal-badge {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.goal-progress {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.goal-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.goal-vals {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--txt2);
+  margin-bottom: 8px;
+}
+
+.goal-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--txt3);
+}
+
+.goal-footer .remove-btn {
+  color: var(--r);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-family: var(--font-body);
+  padding: 0;
+}
+
+.add-goal-btn {
+  margin: 14px 20px 24px;
+  padding: 14px;
+  background: #f0eeff;
+  border-radius: 14px;
+  border: 2px dashed var(--v2);
+  text-align: center;
+  font-size: 13px;
+  color: var(--v);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.add-goal-btn:hover {
+  background: var(--v3);
+}
+
+/* ---- EMPTY STATES ---- */
+.empty-state {
+  text-align: center;
+  color: var(--txt3);
+  padding: 32px 20px;
+  font-size: 14px;
+}
+
+.empty-state-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}

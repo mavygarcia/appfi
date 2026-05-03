@@ -1,0 +1,116 @@
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  background: var(--card);
+  border-radius: 24px 24px 0 0;
+  padding: 24px 20px 36px;
+  width: 100%;
+  max-width: 400px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-right: 36px; /* espaço para o X */
+}
+
+.modal-close {
+  float: right;
+  background: var(--v3);
+  border: none;
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--v);
+  line-height: 30px;
+  text-align: center;
+  position: absolute;
+  right: 20px;
+}
+
+/* Mantém o modal-close dentro do fluxo */
+.modal { position: relative; }
+
+/* ---- TOGGLE TIPO ---- */
+.type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.type-btn {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1.5px solid #eee;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+
+.type-btn.income.active {
+  background: #e8f8f5;
+  border-color: #00b894;
+  color: #00b894;
+}
+
+.type-btn.expense.active {
+  background: #ffeee8;
+  border-color: #d63031;
+  color: #d63031;
+}
+
+/* ---- FORM GROUPS ---- */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 12px;
+  color: var(--txt2);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #eee;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--txt);
+  background: var(--bg);
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--v);
+}
