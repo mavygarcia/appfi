@@ -101,12 +101,15 @@ function openModal(type = 'income', id = null) {
   editId = id;
   setType(type);
 
+  const deleteBtn = document.getElementById('modal-delete-btn');
+
   if (id) {
     // MODO EDIÇÃO
     const t = txs.find(x => x.id === id);
     if (t) {
       document.getElementById('modal-title').textContent       = 'Editar Transação';
       document.getElementById('modal-submit-btn').textContent  = 'Salvar Alterações';
+      if (deleteBtn) deleteBtn.style.display = 'block';
       setType(t.type);
       document.getElementById('f-val').value  = t.val;
       document.getElementById('f-desc').value = t.desc;
@@ -117,6 +120,7 @@ function openModal(type = 'income', id = null) {
     // MODO CRIAÇÃO
     document.getElementById('modal-title').textContent      = 'Nova Transação';
     document.getElementById('modal-submit-btn').textContent = 'Salvar Transação';
+    if (deleteBtn) deleteBtn.style.display = 'none';
     document.getElementById('f-val').value  = '';
     document.getElementById('f-desc').value = '';
     document.getElementById('f-cat').value  = '💰 Salário';
@@ -158,7 +162,7 @@ function setType(type) {
  * Lê os campos do modal, valida e persiste.
  * Atualiza todos os painéis em seguida.
  */
-function saveTx() {
+async function saveTx() {
   const val  = parseFloat(document.getElementById('f-val').value);
   const desc = document.getElementById('f-desc').value.trim();
   const cat  = document.getElementById('f-cat').value;
@@ -168,23 +172,99 @@ function saveTx() {
   if (!desc)            { showToast('⚠️ Informe uma descrição!');    return; }
   if (!date)            { showToast('⚠️ Informe uma data!');         return; }
 
-  if (editId) {
-    // Editar existente
-    const idx = txs.findIndex(t => t.id === editId);
-    txs[idx] = { ...txs[idx], type: txType, val, desc, cat, date };
-    showToast('✅ Transação atualizada!');
-    editId = null;
-  } else {
-    // Nova transação
-    txs.push({ id: Date.now(), type: txType, desc, cat, val, date });
-    showToast('✅ Transação salva!');
+  const payload = { type: txType, val, desc, cat, date };
+
+  try {
+    if (editId) {
+      // Editar existente via PUT
+      const res = await fetch(`/api/transactions/${editId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('✅ Transação atualizada!');
+        editId = null;
+      } else {
+        showToast('❌ Erro ao atualizar transação.');
+        return;
+      }
+    } else {
+      // Nova transação via POST
+      const res = await fetch('/api/transactions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('✅ Transação salva!');
+      } else {
+        showToast('❌ Erro ao salvar transação.');
+        return;
+      }
+    }
+
+    closeModal();
+    await loadData();
+
+    // Verificação de limite de 80% do orçamento para despesas
+    if (payload.type === 'expense') {
+      const budget = parseFloat(localStorage.getItem('appfi_budget') || '1000');
+      const catTxs = txs.filter(t => t.type === 'expense' && t.cat === payload.cat);
+      const catSum = catTxs.reduce((s, t) => s + t.val, 0);
+      if (catSum >= budget * 0.8) {
+        setTimeout(() => {
+          alert(`⚠️ Alerta de Orçamento!\n\nSeus gastos na categoria "${payload.cat.split(' ').slice(1).join(' ')}" somam R$ ${catSum.toFixed(2)}, o que representa ${Math.round(catSum / budget * 100)}% do seu orçamento de R$ ${budget.toFixed(2)}.`);
+        }, 600);
+      }
+    }
+
+    // Redesenha gráficos se a aba estiver visível
+    if (document.getElementById('pg-charts').classList.contains('active')) {
+      setTimeout(drawCharts, 50);
+    }
+  } catch (err) {
+    console.error('Erro ao salvar transação:', err);
+    showToast('❌ Erro de conexão com o servidor.');
   }
+}
 
-  closeModal();
-  renderAll();
+/**
+ * Exclui uma transação via DELETE
+ */
+async function deleteTx(id) {
+  if (!id) return;
+  if (!confirm('Tem certeza que deseja excluir esta transação?')) return;
 
-  // Redesenha gráficos se a aba estiver visível
-  if (document.getElementById('pg-charts').classList.contains('active')) {
-    setTimeout(drawCharts, 50);
+  try {
+    const res = await fetch(`/api/transactions/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (res.ok) {
+      showToast('🗑️ Transação excluída com sucesso!');
+      editId = null;
+      closeModal();
+      await loadData();
+
+      // Redesenha gráficos se a aba estiver visível
+      if (document.getElementById('pg-charts').classList.contains('active')) {
+        setTimeout(drawCharts, 50);
+      }
+    } else {
+      showToast('❌ Erro ao excluir transação.');
+    }
+  } catch (err) {
+    console.error('Erro ao excluir transação:', err);
+    showToast('❌ Erro de conexão com o servidor.');
   }
 }

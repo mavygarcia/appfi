@@ -10,6 +10,6 @@ function renderAll() {
    INICIALIZAÇÃO
  */
 document.addEventListener('DOMContentLoaded', () => {
-  renderAll();
+  loadData();
   console.log(' App Financeiro iniciado com sucesso!');
 });

@@ -65,14 +65,28 @@ function getBadge(pct) {
 }
 
 /**
- * Remove uma meta pelo id
+ * Remove uma meta pelo id via DELETE
  * @param {number} id
  */
-function deleteGoal(id) {
+async function deleteGoal(id) {
   if (!confirm('Tem certeza que deseja remover esta meta?')) return;
-  goals = goals.filter(g => g.id !== id);
-  renderGoals();
-  showToast('Meta removida');
+  try {
+    const res = await fetch(`/api/goals/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (res.ok) {
+      showToast('Meta removida com sucesso!');
+      await loadData();
+    } else {
+      showToast('❌ Erro ao remover meta.');
+    }
+  } catch (err) {
+    console.error('Erro ao deletar meta:', err);
+    showToast('❌ Erro de conexão com o servidor.');
+  }
 }
 /* 
    MODAL — CRIAR META
@@ -93,10 +107,9 @@ function closeGoalModal() {
 }
 
 /**
- * Valida e salva uma nova meta,
- * respeitando o limite de 5 metas simultâneas
+ * Valida e salva uma nova meta no backend via POST
  */
-function saveGoal() {
+async function saveGoal() {
   const name    = document.getElementById('g-name').value.trim();
   const target  = parseFloat(document.getElementById('g-target').value);
   const current = parseFloat(document.getElementById('g-current').value) || 0;
@@ -112,15 +125,33 @@ function saveGoal() {
     return;
   }
 
-  goals.push({
-    id: Date.now(),
-    name,
-    target,
-    current,
-    deadline,
-  });
+  const payload = { name, target, current, deadline };
 
-  closeGoalModal();
-  renderGoals();
-  showToast('Meta criada com sucesso!');
+  try {
+    const res = await fetch('/api/goals', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      showToast('Meta criada com sucesso!');
+      if (current >= target) {
+        setTimeout(() => {
+          alert(`🎉 PARABÉNS! Você atingiu 100% da sua meta "${name}"!\nObjetivo alcançado: R$ ${target.toFixed(2)} guardados! 🏆`);
+        }, 600);
+      }
+      closeGoalModal();
+      await loadData();
+    } else {
+      const errData = await res.json();
+      showToast('❌ ' + (errData.error || 'Erro ao salvar meta.'));
+    }
+  } catch (err) {
+    console.error('Erro ao salvar meta:', err);
+    showToast('❌ Erro de conexão com o servidor.');
+  }
 }

@@ -20,16 +20,118 @@
     <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
+    <!-- ========== PAGE: AUTENTICAÇÃO ========== -->
+    <div class="page active" id="pg-auth">
+      <div class="hero" style="text-align: center; border-radius: 0 0 28px 28px; padding: 40px 20px;">
+        <h1 style="font-family: var(--font-display); color: #fff; font-size: 28px; font-weight: 700;">AppFi</h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 8px;">Seu Controle Financeiro Pessoal</p>
+      </div>
+
+      <!-- FORMULÁRIO DE LOGIN -->
+      <div class="section" id="auth-login-wrap" style="padding-top: 24px;">
+        <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 20px;">Entrar na Conta</h3>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="login-email" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" id="login-password" placeholder="Sua senha" />
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 13px;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--txt2);">
+            <input type="checkbox" id="login-remember" style="width: auto;" /> Lembrar-me
+          </label>
+          <a href="#" onclick="showAuthForm('forgot')" style="color: var(--v); text-decoration: none; font-weight: 500;">Esqueci a senha</a>
+        </div>
+        <button class="submit-btn" onclick="handleLogin()" style="margin-bottom: 16px;">Entrar</button>
+        <div style="text-align: center; font-size: 13px; color: var(--txt2);">
+          Não tem uma conta? <a href="#" onclick="showAuthForm('register')" style="color: var(--v); text-decoration: none; font-weight: 500;">Cadastre-se</a>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO DE CADASTRO -->
+      <div class="section" id="auth-register-wrap" style="padding-top: 24px; display: none;">
+        <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 20px;">Criar Nova Conta</h3>
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div>
+            <label>Nome</label>
+            <input type="text" id="reg-name" placeholder="João" />
+          </div>
+          <div>
+            <label>Sobrenome</label>
+            <input type="text" id="reg-lastname" placeholder="Silva" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="reg-email" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="reg-phone" placeholder="(11) 99999-9999" />
+        </div>
+        <div class="form-group">
+          <label>Senha (mínimo 8 caracteres)</label>
+          <input type="password" id="reg-password" placeholder="Crie sua senha" />
+        </div>
+        <div class="form-group">
+          <label>Confirmar Senha</label>
+          <input type="password" id="reg-password-confirm" placeholder="Confirme a senha" />
+        </div>
+        <button class="submit-btn" onclick="handleRegister()" style="margin-bottom: 16px;">Cadastrar</button>
+        <div style="text-align: center; font-size: 13px; color: var(--txt2);">
+          Já tem uma conta? <a href="#" onclick="showAuthForm('login')" style="color: var(--v); text-decoration: none; font-weight: 500;">Faça login</a>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO DE RECUPERAÇÃO DE SENHA -->
+      <div class="section" id="auth-forgot-wrap" style="padding-top: 24px; display: none;">
+        <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 12px;">Recuperar Senha</h3>
+        <p style="font-size: 13px; color: var(--txt2); margin-bottom: 20px;">Digite seu e-mail para receber um link de redefinição de senha.</p>
+        <div class="form-group">
+          <label>E-mail cadastrado</label>
+          <input type="email" id="forgot-email" placeholder="seu@email.com" />
+        </div>
+        <button class="submit-btn" onclick="handleForgotPassword()" style="margin-bottom: 16px;">Enviar Link</button>
+        <div style="text-align: center; font-size: 13px; color: var(--txt2);">
+          Lembrou a senha? <a href="#" onclick="showAuthForm('login')" style="color: var(--v); text-decoration: none; font-weight: 500;">Voltar ao login</a>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO DE REDEFINIÇÃO DE SENHA -->
+      <div class="section" id="auth-reset-wrap" style="padding-top: 24px; display: none;">
+        <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 12px;">Redefinir Senha</h3>
+        <p style="font-size: 13px; color: var(--txt2); margin-bottom: 20px;">Informe a nova senha e o código/token que você recebeu.</p>
+        <div class="form-group">
+          <label>Código/Token de Recuperação</label>
+          <input type="text" id="reset-token" placeholder="Cole o token aqui" />
+        </div>
+        <div class="form-group">
+          <label>Nova Senha (mínimo 8 caracteres)</label>
+          <input type="password" id="reset-password" placeholder="Nova senha" />
+        </div>
+        <div class="form-group">
+          <label>Confirmar Nova Senha</label>
+          <input type="password" id="reset-password-confirm" placeholder="Confirme a nova senha" />
+        </div>
+        <button class="submit-btn" onclick="handleResetPassword()" style="margin-bottom: 16px;">Redefinir Senha</button>
+        <div style="text-align: center; font-size: 13px; color: var(--txt2);">
+          <a href="#" onclick="showAuthForm('login')" style="color: var(--v); text-decoration: none; font-weight: 500;">Voltar ao login</a>
+        </div>
+      </div>
+    </div>
+
     <!-- ========== PAGE: DASHBOARD ========== -->
-    <div class="page active" id="pg-home">
+    <div class="page" id="pg-home">
 
       <div class="hero">
         <div class="hero-top">
           <div>
             <div class="hero-greeting">Olá,</div>
-            <h2 class="hero-name">João da Silva!</h2>
+            <h2 class="hero-name" id="hero-name">Carregando...</h2>
           </div>
-          <div class="avatar">JD</div>
+          <div class="avatar" id="avatar-btn" onclick="switchPage('pg-profile')" style="cursor: pointer; overflow: hidden; background: #fff;">U</div>
         </div>
         <div class="balance-label">Saldo Total</div>
         <div class="balance-val" id="hero-balance">R$ 0,00</div>
@@ -122,6 +224,11 @@
         <p>Visão financeira completa</p>
       </div>
 
+      <div class="export-actions">
+        <button class="export-btn" onclick="exportCSV()">📥 Exportar CSV</button>
+        <button class="export-btn" onclick="exportPDF()">📄 Exportar PDF</button>
+      </div>
+
       <div class="metrics-grid">
         <div class="metric-card">
           <div class="metric-lbl">Receita Total</div>
@@ -152,6 +259,20 @@
         </div>
       </div>
 
+      <div class="section">
+        <div class="section-title">Evolução Mensal (Linha)</div>
+        <div class="chart-card">
+          <canvas id="lineChart" height="150"></canvas>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Distribuição por Categoria (Rosca)</div>
+        <div class="chart-card">
+          <canvas id="doughnutChart" height="150"></canvas>
+        </div>
+      </div>
+
       <div class="section" style="margin-bottom:16px">
         <div class="section-title">Categorias de Gastos</div>
         <div class="cat-list" id="cat-list"></div>
@@ -173,7 +294,61 @@
       <div class="add-goal-btn" onclick="openGoalModal()">+ Criar nova meta</div>
 
     </div>
-    <!-- /pg-goals -->
+    <!-- ========== PAGE: PERFIL ========== -->
+    <div class="page" id="pg-profile">
+      <div class="hero" style="text-align: center; border-radius: 0 0 28px 28px; padding: 24px 20px 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; width: 100%;">
+          <button onclick="switchPage('pg-home')" style="color: #fff; font-size: 16px; line-height: 1; background: none; border: none; cursor: pointer;">‹ Voltar</button>
+          <h2 style="font-family: var(--font-display); color: #fff; font-size: 18px; font-weight: 700; margin: 0 auto; padding-right: 48px;">Meu Perfil</h2>
+        </div>
+        
+        <!-- Foto de Perfil Upload -->
+        <div style="position: relative; display: inline-block; margin-top: 12px;">
+          <div class="avatar" id="profile-avatar-preview" style="width: 80px; height: 80px; font-size: 28px; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin: 0 auto; overflow: hidden; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--v); font-weight: bold;">U</div>
+          <label for="profile-photo-input" style="position: absolute; bottom: 0; right: 0; background: var(--v); color: white; width: 28px; height: 28px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            📷
+          </label>
+          <input type="file" id="profile-photo-input" accept="image/*" style="display: none;" onchange="handleProfilePhotoUpload(this)" />
+        </div>
+      </div>
+
+      <div class="section" style="padding-top: 24px;">
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div>
+            <label>Nome</label>
+            <input type="text" id="prof-name" placeholder="Nome" />
+          </div>
+          <div>
+            <label>Sobrenome</label>
+            <input type="text" id="prof-lastname" placeholder="Sobrenome" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="prof-email" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="prof-phone" placeholder="Telefone" />
+        </div>
+
+        <div style="margin-top: 20px; padding: 15px; border-radius: 12px; background: var(--bg); border: 1.5px solid #eee; margin-bottom: 16px;">
+          <h4 style="margin-bottom: 10px; font-size: 14px; font-weight: 600;">Configurações Adicionais</h4>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <label style="font-size: 13px; color: var(--txt2); cursor: pointer;" for="sett-reminders">Receber Lembretes Diários</label>
+            <input type="checkbox" id="sett-reminders" style="width: 18px; height: 18px; cursor: pointer;" onchange="toggleReminders(this)" />
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <label style="font-size: 13px; color: var(--txt2); cursor: pointer;" for="sett-budget">Orçamento Mensal (Limite de 80%)</label>
+            <input type="number" id="sett-budget" placeholder="1000" style="width: 100px; padding: 6px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; text-align: right;" onchange="saveCategoryBudget(this.value)" />
+          </div>
+        </div>
+
+        <button class="submit-btn" onclick="saveProfile()" style="margin-top: 16px; margin-bottom: 12px;">Salvar Alterações</button>
+        <button class="submit-btn" onclick="handleLogout()" style="background: #ff7675; margin-bottom: 24px;">Sair / Logout</button>
+      </div>
+    </div>
+    <!-- /pg-profile -->
 
     <!-- BOTTOM NAV -->
     <nav class="nav">
@@ -249,7 +424,10 @@
         <input type="date" id="f-date" />
       </div>
 
-      <button class="submit-btn" id="modal-submit-btn" onclick="saveTx()">Salvar Transação</button>
+      <div class="modal-actions" style="display: flex; gap: 8px; margin-top: 16px;">
+        <button class="submit-btn" id="modal-submit-btn" onclick="saveTx()" style="flex: 1;">Salvar Transação</button>
+        <button class="submit-btn" id="modal-delete-btn" onclick="deleteTx(editId)" style="display: none; background: #ff7675; flex: 1;">Excluir</button>
+      </div>
     </div>
   </div>
 
@@ -281,6 +459,7 @@
   </div>
 
   <!-- SCRIPTS -->
+  <script src="js/auth.js"></script>
   <script src="js/data.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/transactions.js"></script>

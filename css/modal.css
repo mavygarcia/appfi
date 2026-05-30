@@ -114,3 +114,32 @@
 .form-group select:focus {
   border-color: var(--v);
 }
+
+/* ==========================================
+   DESKTOP MEDIA QUERY (>= 768px)
+   ========================================== */
+@media (min-width: 768px) {
+  .modal-overlay {
+    align-items: center; /* Centraliza verticalmente no desktop */
+  }
+
+  .modal {
+    border-radius: 24px; /* Arredonda todos os cantos */
+    padding: 32px;
+    max-width: 440px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    animation: fadeInZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes fadeInZoom {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+

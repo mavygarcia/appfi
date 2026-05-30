@@ -39,10 +39,13 @@ function showToast(msg) {
  */
 function getTxsForPeriod() {
   return txs.filter(t => {
-    const d = new Date(t.date);
+    if (!t.date) return false;
+    const parts = t.date.split('-');
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
     return (
-      d.getFullYear() === currentPeriod.y &&
-      d.getMonth() + 1 === currentPeriod.m
+      y === currentPeriod.y &&
+      m === currentPeriod.m
     );
   });
 }

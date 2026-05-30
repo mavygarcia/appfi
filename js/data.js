@@ -18,26 +18,55 @@ const CATS_COLORS = {
 /**
  * Transações iniciais (demo)
  */
-let txs = [
-  { id: 1, type: 'income',  desc: 'Salário',      cat: '💰 Salário',     val: 5500, date: '2026-05-01' },
-  { id: 2, type: 'expense', desc: 'Aluguel',       cat: '🏠 Moradia',     val: 1200, date: '2026-05-01' },
-  { id: 3, type: 'expense', desc: 'Supermercado',  cat: '🍔 Alimentação', val:  420, date: '2026-05-02' },
-  { id: 4, type: 'expense', desc: 'Uber',           cat: '🚌 Transporte',  val:   85, date: '2026-05-03' },
-  { id: 5, type: 'income',  desc: 'Freelance',     cat: '📦 Outros',      val:  800, date: '2026-05-04' },
-  { id: 6, type: 'expense', desc: 'Academia',      cat: '❤️ Saúde',       val:   90, date: '2026-05-05' },
-  { id: 7, type: 'expense', desc: 'Netflix',       cat: '💻 Tecnologia',  val:   55, date: '2026-05-05' },
-  { id: 8, type: 'expense', desc: 'Restaurante',   cat: '🎮 Lazer',       val:  150, date: '2026-05-06' },
-];
-
-/**
- * Metas financeiras iniciais (demo)
- */
-let goals = [
-  { id: 1, name: 'Reserva de Emergência', target: 10000, current: 3500,  deadline: '2026-12-31' },
-  { id: 2, name: 'Viagem Europa',          target: 15000, current: 4200,  deadline: '2027-06-30' },
-];
+let txs = [];
+let goals = [];
 
 /**
  * Estado global do período selecionado
  */
 let currentPeriod = { y: 2026, m: 5 };
+
+/**
+ * Carrega dados do backend de forma assíncrona
+ */
+async function loadData() {
+  if (!token) return;
+
+  try {
+    const resTxs = await fetch('/api/transactions', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (resTxs.status === 401) {
+      handleLogout();
+      return;
+    }
+
+    if (resTxs.ok) {
+      txs = await resTxs.json();
+    } else {
+      console.error('Erro ao buscar transações da API');
+    }
+
+    const resGoals = await fetch('/api/goals', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (resGoals.status === 401) {
+      handleLogout();
+      return;
+    }
+
+    if (resGoals.ok) {
+      goals = await resGoals.json();
+    } else {
+      console.error('Erro ao buscar metas da API');
+    }
+  } catch (err) {
+    console.error('Erro de conexão ao carregar dados:', err);
+  }
+  
+  // Atualiza todas as exibições no frontend
+  renderAll();
+}
+
